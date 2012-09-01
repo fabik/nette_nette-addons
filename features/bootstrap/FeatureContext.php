@@ -10,17 +10,15 @@ use Behat\Gherkin\Node\PyStringNode,
 
 
 // Require 3rd-party libraries here:
-require_once 'PHPUnit/Autoload.php';
-require_once 'PHPUnit/Framework/Assert/Functions.php';
+//require_once 'PHPUnit/Autoload.php';
+//require_once 'PHPUnit/Framework/Assert/Functions.php';
 
 
 /**
  * Features context.
  */
-class FeatureContext extends BehatContext
+class FeatureContext extends BaseContext
 {
-	private $output;
-
 	/**
 	 * Initializes context.
 	 * Every scenario gets it's own context object.
@@ -29,7 +27,17 @@ class FeatureContext extends BehatContext
 	 */
 	public function __construct(array $parameters)
 	{
+		parent::__construct($parameters);
 		// Initialize your context here
+	}
+
+
+	/**
+	 * @Given /^Clean database$/
+	 */
+	public function cleanDatabase()
+	{
+		$this->context->reinstall->recreateDatabase();
 	}
 
 	/**
@@ -42,6 +50,8 @@ class FeatureContext extends BehatContext
 
 		foreach ($rows as $row) {
 			$data = array_combine($head, $row);
+
+//			$this->context->
 			dump($data);
 		}
 	}
@@ -51,7 +61,7 @@ class FeatureContext extends BehatContext
 	 */
 	public function iShouldSeeInSelector($text, $selector)
 	{
-		dump($text, $selector);
+		$this->assertSession()->elementContains('css', $selector, $text);
 	}
 
 }

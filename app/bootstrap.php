@@ -7,7 +7,7 @@ use Nette\Application\Routers\Route;
 use Nette\Config\Configurator;
 
 // Load Nette Framework
-require LIBS_DIR . '/autoload.php';
+require_once LIBS_DIR . '/autoload.php';
 require APP_DIR . '/misc/functions.php';
 
 
@@ -36,6 +36,7 @@ $container->router[] = new Route('<presenter>[/<action>][/<id>]', array(
 	'action' => 'default'
 ));
 
+$GLOBALS['container'] = $container;
 
 // Configure and run the application!
 if (!$container->parameters['consoleMode']) {
