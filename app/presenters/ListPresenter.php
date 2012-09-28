@@ -18,7 +18,7 @@ class ListPresenter extends BasePresenter
 		}
 
 		if ($author) {
-			$addons->where('user = ?', $author);
+			$addons->where('user', $author);
 		}
 
 		if ($search) {
